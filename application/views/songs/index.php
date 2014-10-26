@@ -1,3 +1,5 @@
+<?php if (!$this) { exit(header('HTTP/1.0 403 Forbidden')); } ?>
+
 <div class="container">
     <h2>You are in the View: application/views/song/index.php (everything in this box comes from that file)</h2>
     <!-- add song form -->

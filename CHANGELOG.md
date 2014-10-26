@@ -2,6 +2,7 @@ CHANGE LOG
 ==========
 
 ** October 2014 **
+- [panique] forked php-mvc to php-micro, runs now even without modrewrite
 - [tarcnux/panique] PDO debugging
 - [panique] demo ajax call
 - [panique] better output escaping
