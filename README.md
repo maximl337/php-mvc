@@ -49,6 +49,7 @@ will come over time.
 ### On Windows 7 (with EasyPHP)
 
 TODO: [this tutorial is now outdated]
+TOOD: subfolder!
 
 There's a tutorial on [How to install php-mvc on Windows 7, 8 and 8.1](http://www.dev-metal.com/install-php-mvc-windows-7/).
 
