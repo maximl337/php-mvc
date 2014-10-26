@@ -70,6 +70,7 @@ class Application
      */
     private function getUrlWithoutModRewrite()
     {
+        // TODO the "" is weird
         // get URL ($_SERVER['REQUEST_URI'] gets everything after domain and domain ending), something like
         // array(6) { [0]=> string(0) "" [1]=> string(9) "index.php" [2]=> string(10) "controller" [3]=> string(6) "action" [4]=> string(6) "param1" [5]=> string(6) "param2" }
         // split on "/"
@@ -82,7 +83,7 @@ class Application
         $url = array_values($url);
 
         // if first element of our URL is the sub-folder (defined in config/config.php), then remove it from URL
-        if (defined('URL_SUBFOLDER') && $url[0] == URL_SUBFOLDER) {
+        if (defined('URL_SUB_FOLDER') && !empty($url[0]) && $url[0] === URL_SUB_FOLDER) {
             // remove first element (that's obviously the sub-folder)
             unset($url[0]);
             // reset keys again

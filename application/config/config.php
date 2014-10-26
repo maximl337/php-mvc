@@ -18,10 +18,6 @@ ini_set("display_errors", 1);
  * Here we auto-detect your applications URL and the potential sub-folder. Works perfectly on most servers and in local
  * development environments (like WAMP, MAMP, etc.). Don't touch this unless you know what you do.
  *
- * URL_PUBLIC_FOLDER:
- * The folder that is visible to public, users will only have access to that folder so nobody can have a look into
- * "/application" or other folder inside your application or call any other .php file than index.php inside "/public".
- *
  * URL_PROTOCOL:
  * The protocol. Don't change unless you know exactly what you do.
  *
@@ -29,7 +25,7 @@ ini_set("display_errors", 1);
  * The domain. Don't change unless you know exactly what you do.
  *
  * URL_SUB_FOLDER:
- * The sub-folder. Leave it like it is, even if you don't use a sub-folder (then this will be just "/").
+ * The sub-folder. Optional, comment this out if you don't use a sub-folder.
  *
  * URL_INDEX_FILE:
  * Our index file that will be hit on every request to our application. No reason to change this in any way usually.
@@ -42,15 +38,19 @@ ini_set("display_errors", 1);
 // TODO: get rid of unnecessary constants
 // more https://github.com/panique/php-mvc/commit/f4add025bedb681e467cd8aa8b5883249f0b6d42
 
-define('URL_PUBLIC_FOLDER', 'public');
 define('URL_PROTOCOL', 'http://');
 define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
-define('URL_SUB_FOLDER', str_replace(URL_PUBLIC_FOLDER, '', dirname($_SERVER['SCRIPT_NAME'])));
+//define('URL_SUB_FOLDER', 'subfolder');
 define('URL_INDEX_FILE', 'index.php' . DIRECTORY_SEPARATOR);
 
 // the final URLs, constructed with the elements above
-define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
-define('URL_WITH_INDEX_FILE', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER . URL_INDEX_FILE);
+if (defined('URL_SUB_FOLDER')) {
+    define('URL', URL_PROTOCOL . URL_DOMAIN . DIRECTORY_SEPARATOR . URL_SUB_FOLDER . DIRECTORY_SEPARATOR);
+    define('URL_WITH_INDEX_FILE', URL_PROTOCOL . URL_DOMAIN . DIRECTORY_SEPARATOR . URL_SUB_FOLDER . DIRECTORY_SEPARATOR . URL_INDEX_FILE);
+} else {
+    define('URL', URL_PROTOCOL . URL_DOMAIN . DIRECTORY_SEPARATOR);
+    define('URL_WITH_INDEX_FILE', URL_PROTOCOL . URL_DOMAIN . DIRECTORY_SEPARATOR . URL_INDEX_FILE);
+}
 
 /**
  * Configuration for: Database
