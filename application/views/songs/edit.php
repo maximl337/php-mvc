@@ -3,7 +3,7 @@
     <!-- add song form -->
     <div>
         <h3>Edit a song</h3>
-        <form action="<?php echo URL; ?>songs/updatesong" method="POST">
+        <form action="<?php echo URL_WITH_INDEX_FILE; ?>songs/updatesong" method="POST">
             <label>Artist</label>
             <input autofocus type="text" name="artist" value="<?php echo htmlspecialchars($song->artist, ENT_QUOTES, 'UTF-8'); ?>" required />
             <label>Track</label>

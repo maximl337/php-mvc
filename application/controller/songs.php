@@ -55,7 +55,7 @@ class Songs extends Controller
         }
 
         // where to go after song has been added
-        header('location: ' . URL . 'songs/index');
+        header('location: ' . URL_WITH_INDEX_FILE . 'songs/index');
     }
 
     /**
@@ -78,7 +78,7 @@ class Songs extends Controller
         }
 
         // where to go after song has been deleted
-        header('location: ' . URL . 'songs/index');
+        header('location: ' . URL_WITH_INDEX_FILE . 'songs/index');
     }
 
      /**
@@ -102,7 +102,7 @@ class Songs extends Controller
             require APP . 'views/_templates/footer.php';
         } else {
             // redirect user to songs index page (as we don't have a song_id)
-            header('location: ' . URL . 'songs/index');
+            header('location: ' . URL_WITH_INDEX_FILE . 'songs/index');
         }
     }
     
@@ -125,7 +125,7 @@ class Songs extends Controller
         }
 
         // where to go after song has been added
-        header('location: ' . URL . 'songs/index');
+        header('location: ' . URL_WITH_INDEX_FILE . 'songs/index');
     }
 
     /**

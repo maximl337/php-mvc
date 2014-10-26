@@ -18,7 +18,7 @@ class Application
     public function __construct()
     {
         // create array with URL parts in $url
-        $this->splitUrl();
+        $this->getUrlWithoutModRewrite();
 
         // check for controller: no controller given ? then load start-page
         if (!$this->url_controller) {
@@ -68,31 +68,42 @@ class Application
     /**
      * Get and split the URL
      */
-    private function splitUrl()
+    private function getUrlWithoutModRewrite()
     {
-        if (isset($_GET['url'])) {
+        // get URL ($_SERVER['REQUEST_URI'] gets everything after domain and domain ending), something like
+        // array(6) { [0]=> string(0) "" [1]=> string(9) "index.php" [2]=> string(10) "controller" [3]=> string(6) "action" [4]=> string(6) "param1" [5]=> string(6) "param2" }
+        // split on "/"
+        $url = explode('/', $_SERVER['REQUEST_URI']);
+        // also remove everything that's empty or "index.php", so the result is a cleaned array of URL parts, like
+        // array(4) { [2]=> string(10) "controller" [3]=> string(6) "action" [4]=> string(6) "param1" [5]=> string(6) "param2" }
+        $url = array_diff($url, array('', 'index.php'));
+        // to keep things clean we reset the array keys, so we get something like
+        // array(4) { [0]=> string(10) "controller" [1]=> string(6) "action" [2]=> string(6) "param1" [3]=> string(6) "param2" }
+        $url = array_values($url);
 
-            // split URL
-            $url = trim($_GET['url'], '/');
-            $url = filter_var($url, FILTER_SANITIZE_URL);
-            $url = explode('/', $url);
-
-            // Put URL parts into according properties
-            // By the way, the syntax here is just a short form of if/else, called "Ternary Operators"
-            // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
-            $this->url_controller = isset($url[0]) ? $url[0] : null;
-            $this->url_action = isset($url[1]) ? $url[1] : null;
-
-            // Remove controller and action from the split URL
-            unset($url[0], $url[1]);
-
-            // Rebase array keys and store the URL params
-            $this->url_params = array_values($url);
-
-            // for debugging. uncomment this if you have problems with the URL
-            //echo 'Controller: ' . $this->url_controller . '<br>';
-            //echo 'Action: ' . $this->url_action . '<br>';
-            //echo 'Parameters: ' . print_r($this->url_params, true) . '<br>';
+        // if first element of our URL is the sub-folder (defined in config/config.php), then remove it from URL
+        if (defined('URL_SUBFOLDER') && $url[0] == URL_SUBFOLDER) {
+            // remove first element (that's obviously the sub-folder)
+            unset($url[0]);
+            // reset keys again
+            $url = array_values($url);
         }
+
+        // Put URL parts into according properties
+        // By the way, the syntax here is just a short form of if/else, called "Ternary Operators"
+        // @see http://davidwalsh.name/php-shorthand-if-else-ternary-operators
+        $this->url_controller = isset($url[0]) ? $url[0] : null;
+        $this->url_action = isset($url[1]) ? $url[1] : null;
+
+        // Remove controller and action from the split URL
+        unset($url[0], $url[1]);
+
+        // Rebase array keys and store the URL params
+        $this->url_params = array_values($url);
+
+        // for debugging. uncomment this if you have problems with the URL
+        //echo 'Controller: ' . $this->url_controller . '<br>';
+        //echo 'Action: ' . $this->url_action . '<br>';
+        //echo 'Parameters: ' . print_r($this->url_params, true) . '<br>';
     }
 }

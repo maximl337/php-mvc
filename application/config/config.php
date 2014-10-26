@@ -31,6 +31,9 @@ ini_set("display_errors", 1);
  * URL_SUB_FOLDER:
  * The sub-folder. Leave it like it is, even if you don't use a sub-folder (then this will be just "/").
  *
+ * URL_INDEX_FILE:
+ * Our index file that will be hit on every request to our application. No reason to change this in any way usually.
+ *
  * URL:
  * The final, auto-detected URL (build via the segments above). If you don't want to use auto-detection,
  * then replace this line with full URL (and sub-folder) and a trailing slash.
@@ -43,7 +46,11 @@ define('URL_PUBLIC_FOLDER', 'public');
 define('URL_PROTOCOL', 'http://');
 define('URL_DOMAIN', $_SERVER['HTTP_HOST']);
 define('URL_SUB_FOLDER', str_replace(URL_PUBLIC_FOLDER, '', dirname($_SERVER['SCRIPT_NAME'])));
+define('URL_INDEX_FILE', 'index.php' . DIRECTORY_SEPARATOR);
+
+// the final URLs, constructed with the elements above
 define('URL', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER);
+define('URL_WITH_INDEX_FILE', URL_PROTOCOL . URL_DOMAIN . URL_SUB_FOLDER . URL_INDEX_FILE);
 
 /**
  * Configuration for: Database
