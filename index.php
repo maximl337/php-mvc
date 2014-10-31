@@ -1,4 +1,8 @@
 <?php
+//phpinfo();
+
+//exit;
+
 
 /**
  * A simple PHP MVC skeleton
